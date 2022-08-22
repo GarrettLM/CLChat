@@ -5,8 +5,8 @@ Objs = server.o
 
 all: server
 
-client: $(Objs)
-	$(CC) $(LDFlags) $^ -o $@
+server: $(Objs)
+	$(CC) $(LDFlags) $< -lclargparse -o $@
 
 %.o: %.c
 	$(CC) $(CFlags) $< -o $@

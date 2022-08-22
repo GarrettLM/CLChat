@@ -6,25 +6,22 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <clargparse.h> //Compile and install from https://github.com/GarrettLM/clarg
 
 #define BUFFER_LENGTH 80
 #define MAXPENDING 5
 
 static short port = 22222;
 
+#define ARG_TABLE_SIZE 1
+argte arg_table[ARG_TABLE_SIZE] = {
+	{"-p", 1, &port, proc_int_arg}
+};
+
 void handle_connection(int client_sock);
 
-void proc_args(int argc, char *argv[]) {
-	for (int i = 0; i < argc; i++) {
-		if (!strcmp(argv[i], "-p")) {
-			i++;
-			port = atoi(argv[i]);
-		}
-	}
-}
-
 int main(int argc, char *argv[]) {
-	proc_args(argc, argv);
+	proc_args(argc, argv, arg_table, ARG_TABLE_SIZE);
 
 	int serv_sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (serv_sock < 0) {

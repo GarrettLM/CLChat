@@ -6,7 +6,7 @@ Objs = client.o
 all: client
 
 client: $(Objs)
-	$(CC) $(LDFlags) $^ -o $@
+	$(CC) $(LDFlags) $< -lclargparse -o $@
 
 %.o: %.c
 	$(CC) $(CFlags) $< -o $@

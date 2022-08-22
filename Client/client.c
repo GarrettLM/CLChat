@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <clargparse.h> //Compile and install from https://github.com/GarrettLM/clarg
 
 #define USERNAME_LENGTH 10
 #define BUFFER_LENGTH 80
@@ -14,25 +15,17 @@ static char *username;
 static char *serv_ip;
 static short serv_port = 22222;
 
+#define ARG_TABLE_SIZE 3
+argte arg_table[ARG_TABLE_SIZE] = {
+	{"-u", 1, &username, proc_str_arg},
+	{"-p", 1, &serv_port, proc_int_arg},
+	{"-h", 1, &serv_ip, proc_str_arg}
+};
+
 void set_username();
 
-void proc_args(int argc, char *argv[]) {
-	for (int i = 0; i < argc; i++) {
-		if (!strcmp(argv[i], "-u")) {
-			i++;
-			username = argv[i];
-		} else if (!strcmp(argv[i], "-p")) {
-			i++;
-			serv_port = atoi(argv[i]);
-		} else if (!strcmp(argv[i], "-h")) {
-			i++;
-			serv_ip = argv[i];
-		}
-	}
-}
-
 int main(int argc, char *argv[]) {
-	proc_args(argc, argv);
+	proc_args(argc, argv, arg_table, ARG_TABLE_SIZE);
 	if (username == NULL) set_username();
 	int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
