@@ -17,9 +17,9 @@ static short serv_port = 22222;
 
 #define ARG_TABLE_SIZE 3
 argte arg_table[ARG_TABLE_SIZE] = {
-	{"-u", 1, &username, proc_str_arg},
-	{"-p", 1, &serv_port, proc_int_arg},
-	{"-h", 1, &serv_ip, proc_str_arg}
+	{"-u", &username, proc_str_arg},
+	{"-p", &serv_port, proc_int_arg},
+	{"-h", &serv_ip, proc_str_arg}
 };
 
 void set_username();

@@ -15,7 +15,7 @@ static short port = 22222;
 
 #define ARG_TABLE_SIZE 1
 argte arg_table[ARG_TABLE_SIZE] = {
-	{"-p", 1, &port, proc_int_arg}
+	{"-p", &port, proc_int_arg}
 };
 
 void handle_connection(int client_sock);
